@@ -1,13 +1,18 @@
-const Blockchain = require("./models/Blockchain");
-const Block = require("./models/Block");
+
 const jayson = require('jayson');
-const mine  = require("./mine")
+const {startMining, stopMining}  = require("./mine")
+const {PORT} = require("./config")
 
 // create a server
 const server = new jayson.Server({
-  add: function(args, callback) {
-    callback(null, args[0] + args[1]);
-  }
+    startMining: function(_, callback) {
+      startMining()
+      callback(null, "succeeeded")
+    },
+    stopMining: function(_, callback) {
+      stopMining()
+      callback(null, "succeeeded")
+    }
 });
 
-server.http().listen(3000);
+server.http().listen(`${PORT}`);
